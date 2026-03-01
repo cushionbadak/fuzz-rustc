@@ -7,7 +7,7 @@ if [ ! -d rust ]; then
     git clone https://github.com/dwrensha/rust.git --branch fuzz
 fi
 
-rustup override set nightly
+rustup override set nightly-2025-09-02
 
 # - enable coverage instrumentation
 export RUSTFLAGS="$RUSTFLAGS -C passes=sancov-module -C llvm-args=-sanitizer-coverage-level=4"
@@ -49,7 +49,7 @@ fi
 export CFG_VERSION=`rustc --version | cut -f2- -d ' '`
 
 # Usually we can use the precompiled libstd from rustup.
-TOOLCHAIN_ROOT=${RUSTUP_BASE:-$HOME/.rustup}/toolchains/nightly-$TARGET
+TOOLCHAIN_ROOT=${RUSTUP_BASE:-$HOME/.rustup}/toolchains/nightly-2025-09-02-$TARGET
 
 # If a metadata change has landed on master and is not yet in a nightly release,
 # we may need to compile our own libstd. `./x.py build --stage 1` should suffice.

@@ -1,6 +1,16 @@
 **This is an ad-hoc branch targeting `nightly-2025-09-02` only.**
 **See the `master` branch for the main, up-to-date version.**
 
+## Setup (Ubuntu)
+
+On a bare Ubuntu machine:
+
+```sh
+./setup.sh
+```
+
+This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain, and clones the rustc fork.
+
 ---
 
 # Fuzz Rustc
