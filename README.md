@@ -16,7 +16,7 @@ This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain,
 ```sh
 ./setup.sh                # install everything
 ./run-fuzzer.sh           # fuzz with default settings
-./run-fuzzer.sh -jobs=8 -ignore_crashes=1 -max_total_time=3600
+./run-fuzzer.sh -fork=1 -jobs=8 -ignore_crashes=1 -max_total_time=3600
 ./run-72h.sh              # 72-hour background run
 ./summary.sh              # check progress (safe to run during fuzzing)
 ./archive_results.sh      # pack artifacts/ and corpus/ into a tarball
