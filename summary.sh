@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 fmt_count() {
     local dir=$1
     local pattern=$2
-    ls "$dir"/$pattern 2>/dev/null | wc -l | tr -d ' '
+    find "$dir" -maxdepth 1 -name "$pattern" 2>/dev/null | wc -l | tr -d ' '
 }
 
 echo "=== fuzz-rustc summary ($(date)) ==="
