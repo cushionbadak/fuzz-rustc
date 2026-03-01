@@ -25,10 +25,26 @@ fi
 rustup toolchain install nightly-2025-09-02
 rustup override set nightly-2025-09-02
 
-# Clone the rustc fork with fuzz-friendly modifications (if not already present)
+# Get the commit hash that nightly-2025-09-02 was built from
+RUSTC_COMMIT=$(rustc +nightly-2025-09-02 -vV | grep 'commit-hash' | awk '{print $2}')
+echo "nightly-2025-09-02 commit: $RUSTC_COMMIT"
+
+# Clone rustc source at the matching commit
 if [ ! -d rust ]; then
-    git clone https://github.com/dwrensha/rust.git --branch fuzz
+    git clone https://github.com/rust-lang/rust.git
+    cd rust
+    git checkout "$RUSTC_COMMIT"
+    cd ..
+fi
+
+# Create seed directory and add a minimal example
+mkdir -p seeds
+if [ -z "$(ls -A seeds 2>/dev/null)" ]; then
+    echo 'fn main() {}' > seeds/minimal.rs
+    echo 'fn main() { let x: i32 = 42; println!("{}", x); }' > seeds/hello.rs
 fi
 
 echo ""
-echo "Setup complete. Run ./run-fuzzer.sh to start fuzzing."
+echo "Setup complete."
+echo "  - Add .rs files to ./seeds/ as starting inputs for the fuzzer."
+echo "  - Run ./run-fuzzer.sh to start fuzzing."

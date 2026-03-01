@@ -4,7 +4,8 @@ set -e
 set -x
 
 if [ ! -d rust ]; then
-    git clone https://github.com/dwrensha/rust.git --branch fuzz
+    echo "Error: ./rust directory not found. Run ./setup.sh first."
+    exit 1
 fi
 
 rustup override set nightly-2025-09-02
