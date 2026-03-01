@@ -1,3 +1,8 @@
+**This is an ad-hoc branch targeting `nightly-2025-09-02` only.**
+**See the `master` branch for the main, up-to-date version.**
+
+---
+
 # Fuzz Rustc
 
 This repo contains configuration for fuzz-testing the Rust compiler using [libfuzzer-sys](https://github.com/rust-fuzz/libfuzzer),
