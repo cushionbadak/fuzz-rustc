@@ -15,17 +15,17 @@ This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain,
 
 ```sh
 ./setup.sh                # install everything
-./run-fuzzer.sh           # fuzz for 1 hour, 1 worker (default)
-./run-fuzzer.sh 7200      # fuzz for 2 hours
-./run-fuzzer.sh 3600 4    # fuzz for 1 hour, 4 parallel workers
+./run-fuzzer.sh           # fuzz with default settings
+./run-fuzzer.sh -jobs=8 -ignore_crashes=1 -max_total_time=3600
+./run-72h.sh              # 72-hour background run
 ./summary.sh              # check progress (safe to run during fuzzing)
 ./archive_results.sh      # pack artifacts/ and corpus/ into a tarball
 ```
 
-The fuzzer uses `-fork` mode to survive crashes. Extra libfuzzer options can be appended:
+All [libfuzzer options](https://llvm.org/docs/LibFuzzer.html#options) are passed through directly:
 
 ```sh
-./run-fuzzer.sh 3600 4 -only_ascii=1
+./run-fuzzer.sh -jobs=4 -only_ascii=1
 ```
 
 ---

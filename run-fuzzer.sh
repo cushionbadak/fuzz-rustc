@@ -82,30 +82,12 @@ export RUSTC_INSTALL_BINDIR=/tmp/rustc_install_bindir
 # Disable ICE report files (crashing inputs are already saved in artifacts/)
 export RUSTC_ICE=0
 
-# Time budget in seconds (first argument, default: 3600 = 1 hour)
-FUZZ_TIME=${1:-3600}
-# Number of parallel fork workers (second argument, default: 1)
-FUZZ_JOBS=${2:-1}
-shift 2 2>/dev/null || shift 1 2>/dev/null || true
-
-# Log start time
-echo "started: $(date -Iseconds)" > fuzz.log
-echo "time_budget: ${FUZZ_TIME}s" >> fuzz.log
-echo "jobs: $FUZZ_JOBS" >> fuzz.log
-echo "toolchain: nightly-2025-09-02" >> fuzz.log
-echo "target: $TARGET" >> fuzz.log
-
 # The --target flag is important because it prevents build.rs scripts from being built with
 # the above-specified RUSTFLAGS.
 cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -artifact_prefix=artifacts/ \
-    -max_total_time="$FUZZ_TIME" \
-    -fork="$FUZZ_JOBS" \
-    "$@" \
+    ${@:1} \
     `pwd`/corpus `pwd`/seeds 2>&1 | tee -a fuzz.log
-
-# Log end time
-echo "finished: $(date -Iseconds)" >> fuzz.log
 
 # An invocation like this can minimize a crash:
 #cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- -minimize_crash=1 "$@"
