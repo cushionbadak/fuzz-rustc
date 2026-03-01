@@ -4,3 +4,5 @@ corpus/
 artifacts/
 rust/
 fuzz_results_*.tar.gz
+rustc-ice-*.txt
+libdummy_output_file*

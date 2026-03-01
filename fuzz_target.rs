@@ -126,7 +126,7 @@ pub fn main_fuzz(input: Vec<u8>) {
     let args = &["rustc".to_string(),
                  INPUT_PATH.to_string(),
                  "-o".to_string(),
-                 "dummy_output_file".to_string(),
+                 "/tmp/dummy_output_file".to_string(),
                  "--edition".to_string(),
                  "2018".to_string(),
                  "-L".to_string(),

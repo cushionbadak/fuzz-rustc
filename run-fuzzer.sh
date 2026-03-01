@@ -76,6 +76,9 @@ export RUSTC_ERROR_METADATA_DST=/tmp/rustc_error_metadata
 
 export RUSTC_INSTALL_BINDIR=/tmp/rustc_install_bindir
 
+# Disable ICE report files (crashing inputs are already saved in artifacts/)
+export RUSTC_ICE=0
+
 # Time budget in seconds (first argument, default: 3600 = 1 hour)
 FUZZ_TIME=${1:-3600}
 shift 2>/dev/null || true
