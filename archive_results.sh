@@ -14,8 +14,9 @@ fi
 
 # Create a wrapper directory so tar extracts into a single folder
 mkdir -p "$ARCHIVE_NAME"
-[ -d "artifacts" ] && cp -r artifacts "$ARCHIVE_NAME/"
-[ -d "corpus" ] && cp -r corpus "$ARCHIVE_NAME/"
+[ -d "artifacts" ] && cp -a artifacts "$ARCHIVE_NAME/"
+[ -d "corpus" ] && cp -a corpus "$ARCHIVE_NAME/"
+[ -f "fuzz.log" ] && cp -a fuzz.log "$ARCHIVE_NAME/"
 
 # Summary
 echo "  artifacts: $(ls "$ARCHIVE_NAME/artifacts" 2>/dev/null | wc -l) files"

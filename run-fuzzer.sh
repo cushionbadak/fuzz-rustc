@@ -83,6 +83,12 @@ export RUSTC_ICE=0
 FUZZ_TIME=${1:-3600}
 shift 2>/dev/null || true
 
+# Log start time
+echo "started: $(date -Iseconds)" > fuzz.log
+echo "time_budget: ${FUZZ_TIME}s" >> fuzz.log
+echo "toolchain: nightly-2025-09-02" >> fuzz.log
+echo "target: $TARGET" >> fuzz.log
+
 # The --target flag is important because it prevents build.rs scripts from being built with
 # the above-specified RUSTFLAGS.
 cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
@@ -91,6 +97,9 @@ cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -fork=1 \
     "$@" \
     `pwd`/corpus `pwd`/seeds
+
+# Log end time
+echo "finished: $(date -Iseconds)" >> fuzz.log
 
 # An invocation like this can minimize a crash:
 #cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- -minimize_crash=1 "$@"
