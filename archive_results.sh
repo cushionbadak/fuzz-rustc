@@ -16,7 +16,8 @@ fi
 mkdir -p "$ARCHIVE_NAME"
 [ -d "artifacts" ] && cp -a artifacts "$ARCHIVE_NAME/"
 [ -d "corpus" ] && cp -a corpus "$ARCHIVE_NAME/"
-[ -f "fuzz.log" ] && cp -a fuzz.log "$ARCHIVE_NAME/"
+[ -f "date.txt" ] && cp -a date.txt "$ARCHIVE_NAME/"
+for f in fuzz*.log; do [ -f "$f" ] && cp -a "$f" "$ARCHIVE_NAME/"; done
 
 # Summary
 echo "  artifacts: $(ls "$ARCHIVE_NAME/artifacts" 2>/dev/null | wc -l) files"
