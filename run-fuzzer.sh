@@ -85,9 +85,7 @@ shift 2>/dev/null || true
 cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -artifact_prefix=artifacts/ \
     -max_total_time="$FUZZ_TIME" \
-    -ignore_crashes=1 \
-    -ignore_timeouts=1 \
-    -ignore_ooms=1 \
+    -fork=1 \
     "$@" \
     `pwd`/corpus `pwd`/seeds
 
