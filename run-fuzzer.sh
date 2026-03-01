@@ -96,7 +96,7 @@ cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -max_total_time="$FUZZ_TIME" \
     -fork=1 \
     "$@" \
-    `pwd`/corpus `pwd`/seeds
+    `pwd`/corpus `pwd`/seeds 2>&1 | tee -a fuzz.log
 
 # Log end time
 echo "finished: $(date -Iseconds)" >> fuzz.log
