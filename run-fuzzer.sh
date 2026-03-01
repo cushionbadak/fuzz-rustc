@@ -84,17 +84,14 @@ export RUSTC_ICE=0
 
 # Time budget in seconds (first argument, default: 3600 = 1 hour)
 FUZZ_TIME=${1:-3600}
-shift 2>/dev/null || true
-
-# Default to fork=1 unless user passes their own -fork=N
-FORK_FLAG="-fork=1"
-for arg in "$@"; do
-    case "$arg" in -fork=*) FORK_FLAG="" ;; esac
-done
+# Number of parallel fork workers (second argument, default: 1)
+FUZZ_JOBS=${2:-1}
+shift 2 2>/dev/null || shift 1 2>/dev/null || true
 
 # Log start time
 echo "started: $(date -Iseconds)" > fuzz.log
 echo "time_budget: ${FUZZ_TIME}s" >> fuzz.log
+echo "jobs: $FUZZ_JOBS" >> fuzz.log
 echo "toolchain: nightly-2025-09-02" >> fuzz.log
 echo "target: $TARGET" >> fuzz.log
 
@@ -103,7 +100,7 @@ echo "target: $TARGET" >> fuzz.log
 cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -artifact_prefix=artifacts/ \
     -max_total_time="$FUZZ_TIME" \
-    $FORK_FLAG \
+    -fork="$FUZZ_JOBS" \
     "$@" \
     `pwd`/corpus `pwd`/seeds 2>&1 | tee -a fuzz.log
 

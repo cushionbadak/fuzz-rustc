@@ -14,19 +14,18 @@ This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain,
 ## Usage
 
 ```sh
-./setup.sh              # install everything
-./run-fuzzer.sh         # fuzz for 1 hour (default)
-./run-fuzzer.sh 7200    # fuzz for 2 hours
-./summary.sh            # check progress (safe to run during fuzzing)
-./archive_results.sh    # pack artifacts/ and corpus/ into a tarball
+./setup.sh                # install everything
+./run-fuzzer.sh           # fuzz for 1 hour, 1 worker (default)
+./run-fuzzer.sh 7200      # fuzz for 2 hours
+./run-fuzzer.sh 3600 4    # fuzz for 1 hour, 4 parallel workers
+./summary.sh              # check progress (safe to run during fuzzing)
+./archive_results.sh      # pack artifacts/ and corpus/ into a tarball
 ```
 
-Parallelism and extra libfuzzer options can be passed after the time budget.
-The fuzzer uses `-fork` mode to survive crashes.
+The fuzzer uses `-fork` mode to survive crashes. Extra libfuzzer options can be appended:
 
 ```sh
-./run-fuzzer.sh 3600 -fork=4        # 4 parallel fuzzing processes
-./run-fuzzer.sh 3600 -only_ascii=1  # only ascii inputs
+./run-fuzzer.sh 3600 4 -only_ascii=1
 ```
 
 ---
