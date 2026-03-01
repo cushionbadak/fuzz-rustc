@@ -86,6 +86,12 @@ export RUSTC_ICE=0
 FUZZ_TIME=${1:-3600}
 shift 2>/dev/null || true
 
+# Default to fork=1 unless user passes their own -fork=N
+FORK_FLAG="-fork=1"
+for arg in "$@"; do
+    case "$arg" in -fork=*) FORK_FLAG="" ;; esac
+done
+
 # Log start time
 echo "started: $(date -Iseconds)" > fuzz.log
 echo "time_budget: ${FUZZ_TIME}s" >> fuzz.log
@@ -97,7 +103,7 @@ echo "target: $TARGET" >> fuzz.log
 cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
     -artifact_prefix=artifacts/ \
     -max_total_time="$FUZZ_TIME" \
-    -fork=1 \
+    $FORK_FLAG \
     "$@" \
     `pwd`/corpus `pwd`/seeds 2>&1 | tee -a fuzz.log
 

@@ -21,7 +21,8 @@ This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain,
 ./archive_results.sh    # pack artifacts/ and corpus/ into a tarball
 ```
 
-Extra libfuzzer options can be passed after the time budget:
+Parallelism and extra libfuzzer options can be passed after the time budget.
+The fuzzer uses `-fork` mode to survive crashes.
 
 ```sh
 ./run-fuzzer.sh 3600 -fork=4        # 4 parallel fuzzing processes
