@@ -1,5 +1,6 @@
-target
-seeds
-corpus
-artifacts
-rust
+target/
+seeds/
+corpus/
+artifacts/
+rust/
+fuzz_results_*.tar.gz

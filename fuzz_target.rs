@@ -89,8 +89,7 @@ pub struct NullCodegenBackend;
 impl rustc_codegen_ssa::traits::CodegenBackend for NullCodegenBackend {
     fn codegen_crate<'tcx>(&self,
                            _: rustc_middle::ty::TyCtxt<'tcx>,
-                           _: rustc_metadata::EncodedMetadata,
-                           _: bool) -> std::boxed::Box<(dyn core::any::Any + 'static)> {
+                           ) -> std::boxed::Box<(dyn core::any::Any + 'static)> {
         unimplemented!()
     }
 
@@ -110,6 +109,7 @@ impl rustc_codegen_ssa::traits::CodegenBackend for NullCodegenBackend {
         &self,
         _sess: &rustc_session::Session,
         _codegen_results: rustc_codegen_ssa::CodegenResults,
+        _metadata: rustc_metadata::EncodedMetadata,
         _outputs: &rustc_session::config::OutputFilenames,
     ) {
         unimplemented!()
