@@ -25,6 +25,9 @@ export RUSTFLAGS="$RUSTFLAGS -Z force-unstable-if-unmarked"
 # - enable debug assertions
 export RUSTFLAGS="$RUSTFLAGS -C debug-assertions=on"
 
+# - suppress noisy warnings from rustc source
+export RUSTFLAGS="$RUSTFLAGS -A non_local_definitions"
+
 #export RUSTFLAGS="$RUSTFLAGS -Z sanitizer=address"
 
 # Create seed directory if it does not exist. Add example files here.
