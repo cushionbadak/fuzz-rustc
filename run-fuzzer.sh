@@ -3,6 +3,9 @@
 set -e
 set -x
 
+# Ensure cargo/rustup are in PATH
+source "$HOME/.cargo/env" 2>/dev/null || true
+
 if [ ! -d rust ]; then
     echo "Error: ./rust directory not found. Run ./setup.sh first."
     exit 1
