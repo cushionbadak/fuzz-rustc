@@ -73,9 +73,20 @@ export RUSTC_ERROR_METADATA_DST=/tmp/rustc_error_metadata
 
 export RUSTC_INSTALL_BINDIR=/tmp/rustc_install_bindir
 
+# Time budget in seconds (first argument, default: 3600 = 1 hour)
+FUZZ_TIME=${1:-3600}
+shift 2>/dev/null || true
+
 # The --target flag is important because it prevents build.rs scripts from being built with
 # the above-specified RUSTFLAGS.
-cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- -artifact_prefix=artifacts/ ${@:1} `pwd`/corpus `pwd`/seeds
+cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- \
+    -artifact_prefix=artifacts/ \
+    -max_total_time="$FUZZ_TIME" \
+    -ignore_crashes=1 \
+    -ignore_timeouts=1 \
+    -ignore_ooms=1 \
+    "$@" \
+    `pwd`/corpus `pwd`/seeds
 
 # An invocation like this can minimize a crash:
-#cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- -minimize_crash=1 ${@:1}
+#cargo run --release --verbose --target $TARGET --bin "fuzz_target" -- -minimize_crash=1 "$@"

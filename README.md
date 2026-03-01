@@ -9,7 +9,17 @@ On a bare Ubuntu machine:
 ./setup.sh
 ```
 
-This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain, and clones the rustc fork.
+This installs system dependencies, `rustup`, the `nightly-2025-09-02` toolchain, and clones the rustc source.
+
+## Usage
+
+```sh
+./setup.sh              # install everything
+./run-fuzzer.sh         # fuzz for 1 hour (default)
+./run-fuzzer.sh 7200    # fuzz for 2 hours
+./summary.sh            # check progress (safe to run during fuzzing)
+./archive_results.sh    # pack artifacts/ and corpus/ into a tarball
+```
 
 ---
 
