@@ -25,15 +25,15 @@ fi
 rustup toolchain install nightly-2025-09-02
 rustup override set nightly-2025-09-02
 
-# Get the commit hash that nightly-2025-09-02 was built from
-RUSTC_COMMIT=$(rustc +nightly-2025-09-02 -vV | grep 'commit-hash' | awk '{print $2}')
-echo "nightly-2025-09-02 commit: $RUSTC_COMMIT"
-
-# Clone rustc source at the matching commit
+# Shallow-clone rustc source at the exact nightly-2025-09-02 commit
+RUSTC_COMMIT=7aef4bec4bec16cb6204d51eb633873e23b18771
 if [ ! -d rust ]; then
-    git clone https://github.com/rust-lang/rust.git
+    mkdir rust
     cd rust
-    git checkout "$RUSTC_COMMIT"
+    git init
+    git remote add origin https://github.com/rust-lang/rust.git
+    git fetch --depth 1 origin "$RUSTC_COMMIT"
+    git checkout FETCH_HEAD
     cd ..
 fi
 
