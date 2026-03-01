@@ -37,12 +37,8 @@ if [ ! -d rust ]; then
     cd ..
 fi
 
-# Create seed directory and add a minimal example
+# Create seed directory
 mkdir -p seeds
-if [ -z "$(ls -A seeds 2>/dev/null)" ]; then
-    echo 'fn main() {}' > seeds/minimal.rs
-    echo 'fn main() { let x: i32 = 42; println!("{}", x); }' > seeds/hello.rs
-fi
 
 echo ""
 echo "Setup complete."
